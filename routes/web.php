@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,3 +29,12 @@ Route::get('/user-select',[UserController::class,'select']);
 Route::get('/join',[UserController::class,'join']);
 Route::get('/lelf-join',[UserController::class,'lelfJoin']);
 Route::get('/right-join',[UserController::class,'rightJoin']);
+//demo
+Route::get('/insert',[UserController::class,'insert']);
+Route::get('/update',[UserController::class,'update']);
+Route::get('/delete',[UserController::class,'delete']);
+Route::get('/get-author',[AuthorController::class,'list']);
+Route::get('/find',[AuthorController::class,'find']);
+Route::get('/insert-author',[AuthorController::class,'insert']);
+Route::get('/update-author',[AuthorController::class,'update']);
+Route::get('/delete-author',[AuthorController::class,'delete']);
