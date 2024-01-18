@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,5 +25,13 @@ Route::prefix('/admin')->group(function (){
         Route::get('/update/{id}',[UserController::class,'update'])->name('admin.user.update');
         Route::post('/update',[UserController::class,'doUpdate'])->name('admin.user.doUpdate');
         Route::get('/delete/{id}',[UserController::class,'delete'])->name('admin.user.delete');
+    });
+    Route::prefix('/category')->group(function (){
+        Route::get('/',[CategoryController::class,'list'])->name('admin.category.list');
+        Route::get('/add',[CategoryController::class,'add'])->name('admin.category.add');
+        Route::post('/add',[CategoryController::class,'doAdd'])->name('admin.category.doAdd');
+        Route::get('/update/{id}',[CategoryController::class,'update'])->name('admin.category.update');
+        Route::post('/update',[CategoryController::class,'doUpdate'])->name('admin.category.doUpdate');
+        Route::get('/delete/{id}',[CategoryController::class,'delete'])->name('admin.category.delete');
     });
 });

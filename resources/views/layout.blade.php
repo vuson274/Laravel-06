@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="{{route('admin.user.list')}}">User</a>
-                    <a class="nav-link" href="#">Category</a>
+                    <a class="nav-link" href="{{route('admin.category.list')}}">Category</a>
                     <a class="nav-link" href="#">Product</a>
                 </div>
             </div>
