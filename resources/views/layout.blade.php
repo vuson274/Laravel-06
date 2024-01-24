@@ -21,10 +21,10 @@
                    <div class="collapse navbar-collapse" id="navbarNav">
                        <ul class="navbar-nav">
                            <li class="nav-item">
-                               <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+                               <a class="nav-link active" aria-current="page" href="">Home</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="{{route('category')}}">Category</a>
+                               <a class="nav-link" href="{{}}">Category</a>
                            </li>
                            <li class="nav-item">
                                <a class="nav-link" href="#">Pricing</a>
@@ -34,7 +34,7 @@
                </div>
            </nav>
        </div>
-       <div style="height: 80vh; text-align: center;">
+       <div style="min-height: 80vh; text-align: center;">
            @yield('content')
        </div>
        <div style="background-color: red; height: 10vh; color: #e2e8f0">footer</div>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Book;
+use App\Models\Order;
+use App\Models\PassPost;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -47,5 +50,27 @@ class AuthorController extends Controller
 
         // Author::where('id',20)->delete();
         Author::onlyTrashed()->where('id',20)->forceDelete();
+    }
+
+    public function paginate(){
+        $list = Author::paginate(15);
+        return view('home', compact('list'));
+    }
+    public function oneToOne(){
+        // $author = Author::find(23);
+        $passPost = PassPost::find(5);
+        dd($passPost->author);
+    }
+
+    public function oneToMany(){
+        // $author = Author::find(23);
+        $book = Book::find(2);
+        dd($book->author);
+    }
+
+    public function manyToMany(){
+        // $book = Book::find(3);
+        $order =Order::find(1);
+        dd($order->books);
     }
 }

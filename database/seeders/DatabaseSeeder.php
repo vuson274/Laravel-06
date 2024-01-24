@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Author;
+use App\Models\PassPost;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 // use Database\Seeders\AuthorSeeder;
@@ -18,6 +19,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         // $this->call(AuthorSeeder::class);
-        Author::factory(50)->create();
+       PassPost::factory(5)->create();
     }
 }

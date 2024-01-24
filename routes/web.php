@@ -19,7 +19,7 @@ use App\Http\Controllers\AuthorController;
 
 // Route::get('/home',[CategoryController::class,'index'])->name('home');
 // Route::get('category',[CategoryController::class,'category'])->name('category');
-
+// Route::get('/home',[AuthorController::class,'index'])->name('home');
 Route::get('/user',[UserController::class,'getAll']);
 Route::get('/user-where',[UserController::class,'where']);
 Route::get('/user-orwhere',[UserController::class,'orWhere']);
@@ -38,3 +38,15 @@ Route::get('/find',[AuthorController::class,'find']);
 Route::get('/insert-author',[AuthorController::class,'insert']);
 Route::get('/update-author',[AuthorController::class,'update']);
 Route::get('/delete-author',[AuthorController::class,'delete']);
+
+Route::get('/home',[AuthorController::class,'paginate']);
+Route::get('/one-to-one',[AuthorController::class,'oneToOne']);
+Route::get('/one-to-many',[AuthorController::class,'oneToMany']);
+Route::get('/many-to-many',[AuthorController::class,'manyToMany']);
+
+Route::get('/poly-one-to-one',[UserController::class,'oneToOne']);
+Route::get('/poly-one-to-many',[ProductController::class,'oneToMany']);
+Route::get('/poly-many-to-many',[ProductController::class,'manyToMany']);
+
+Route::get('/file',[ProductController::class,'file']);
+Route::post('/upload',[ProductController::class,'upload'])->name('upload');

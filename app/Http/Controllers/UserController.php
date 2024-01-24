@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -87,4 +88,11 @@ class UserController extends Controller
     public function delete(){
         Db::table('authors')->where('id',14)->delete();
     }
+
+
+    public function oneToOne(){
+       $user = User::find(1);
+        dd($user->image);
+    }
+
 }

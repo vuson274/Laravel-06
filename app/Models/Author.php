@@ -12,4 +12,12 @@ class Author extends Model
 
     // protected $table ='author';
     protected $fillable=['name'];
+
+    public function passPost(){
+        return $this->hasOne(PassPost::class);
+    }
+
+    public function books(){
+        return $this->hasMany(Book::class);
+    }
 }
