@@ -7,7 +7,7 @@
         </div>
         <div><hr></div>
         <div>
-            <table class="table">
+            <table class="table" id="dataTable">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
