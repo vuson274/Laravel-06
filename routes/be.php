@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductController;
 Route::prefix('/admin')->group(function (){
     Route::prefix('/category')->group(function (){
         Route::get('/',[CategoryController::class,'list'])->name('admin.category.list');
@@ -28,6 +29,14 @@ Route::prefix('/admin')->group(function (){
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
         Route::post('/doEdit', [UserController::class,'doEdit'])->name('admin.user.doEdit');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
+    });
+    Route::prefix('/product')->group(function (){
+        Route::get('/',[ProductController::class,'list'])->name('admin.product.list');
+        Route::get('/add', [ProductController::class,'add'])->name('admin.product.add');
+        Route::post('/doAdd', [ProductController::class,'doAdd'])->name('admin.product.doAdd');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::post('/doEdit', [ProductController::class,'doEdit'])->name('admin.product.doEdit');
+        Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
     });
 });
 ?>
