@@ -40,7 +40,10 @@ Route::prefix('/admin')->middleware(\App\Http\Middleware\Admin::class)->group(fu
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
     });
     Route::post('/upload', [ProductController::class,'upload'])->name('ckeditor.upload');
+    Route::get('/home',[LoginController::class,'darshbroard'])->name('admin.darshbroard');
 });
 
-Route::get('/login', [LoginController::class,'showForm'])->name('login');
+Route::get('/show-login', [LoginController::class,'showForm'])->name('show.login');
+Route::post('/login', [LoginController::class,'login'])->name('login');
+Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 ?>
