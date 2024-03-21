@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller implements ICRUD
@@ -17,7 +19,9 @@ class ProductController extends Controller implements ICRUD
 
     public function add()
     {
-       return view('be.product.add');
+        $categories = Category::all();
+        $sales = Sale::all();
+       return view('be.product.add', compact('categories', 'sales'));
     }
 
     public function doAdd(Request $request)
