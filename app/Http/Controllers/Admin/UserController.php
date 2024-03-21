@@ -67,9 +67,8 @@ class UserController extends Controller implements ICRUD
             unset($data['img']);
             $data['password'] = Hash::make($data['password']);
             User::where('id', $data['id'])->update($data);
-            if (empty($file)){
-                $image['path'] = $user->image->path;
-            } else {
+            if (!empty($file)){
+                // $image['path'] = $user->image->path;
                 $idImage  = $user->image->id;
                 $fileName = time() . $file->getClientOriginalName();
                 $file->storeAs('/user', $fileName, 'public');
@@ -78,7 +77,8 @@ class UserController extends Controller implements ICRUD
                 $image['imageable_type'] = User::class;
                 $image['path']           = '/storage/user/' . $fileName;
                 Image::where('id', $idImage)->delete();
-                $image->save();}
+                $image->save();
+            }
             DB::commit();
         }catch (\Exception $exception){
             DB::rollBack();

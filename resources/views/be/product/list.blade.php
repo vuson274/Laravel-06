@@ -1,7 +1,7 @@
 @extends('be.layout')
 @section('content')
     <div class="col-lg-12">
-        <h2>Tài Khoản</h2>
+        <h2>Sản phẩm</h2>
         <div class="text-right">
             <a class="btn btn-success" href="{{route('admin.product.add')}}">Thêm</a>
         </div>
@@ -12,10 +12,10 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tên</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Loại tài Khoản</th>
-                    <th scope="col">Ảnh đại diện</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Số lượng đã bán</th>
                     <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
@@ -30,16 +30,12 @@
                     <tr>
                         <th scope="row">{{$count}}</th>
                         <td>{{$item->name}}</td>
-                        <td>{{$item->email}}</td>
-                        <td>{{$item->phone}}</td>
-                        @if ($item->level == 1)
-                            <td>Admin</td>
-                        @else
-                            <td>Member</td>
-                        @endif
+                        <td>{{$item->price}}</td>
+                        <td>{{$item->quantity}}</td>
                         <td>
-                            <img style="width: 100px" src="{{$item->image->path}}">
+                            <img style="width: 100px" src="{{$item->images[0]->path}}">
                         </td>
+                        <td>{{$item->sold}}</td>
                         <td>
                             <a  class="btn btn-warning" href="{{route('admin.user.edit', ['id'=> $item->id])}}">Sửa</a>
                             <a class=" btn btn-danger" href="{{route('admin.user.delete', ['id'=> $item->id])}}" onclick="confirm('Bạn có chắc chắn muốn xóa')">Xóa</a>

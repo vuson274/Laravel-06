@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller implements ICRUD
 {
@@ -26,7 +28,31 @@ class ProductController extends Controller implements ICRUD
 
     public function doAdd(Request $request)
     {
-        // TODO: Implement doAdd() method.
+
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $files = $data['img'];
+            unset($data['_token']);
+            unset($data['img']);
+            $product = Product::create($data);
+            if ($files && count($files) >0){
+                for ($i =0; $i < count($files); $i++){
+                    $fileName = time().$i.$files[$i]->getClientOriginalName();
+                    $files[$i]->storeAs('/product', $fileName,'public');
+                    $image = new Image();
+                    $image->path = '/storage/product/'.$fileName;
+                    $image->imageable_id = $product->id;
+                    $image->imageable_type = Product::class;
+                    $image->save();
+                }
+            }
+            DB::commit();
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->back()->with('error','Thêm thất bại');
+        }
+        return redirect()->route('admin.product.list')->with('success','Thêm thành công');
     }
 
     public function edit($id)
@@ -42,5 +68,20 @@ class ProductController extends Controller implements ICRUD
     public function delete($id)
     {
         // TODO: Implement delete() method.
+    }
+
+    public function upload(Request $request){
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
+            $request->file('upload')->move(public_path('images'), $fileName);
+
+            $url = asset('images/' . $fileName);
+
+            return response()->json(['fileName' => $fileName, 'uploaded'=> 1, 'url' => $url]);
+        }
     }
 }

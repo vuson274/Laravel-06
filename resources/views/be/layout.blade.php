@@ -21,7 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('/admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('/admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 
 </head>
 
@@ -449,7 +449,11 @@
 <script src="{{asset('/admin/js/demo/datatables-demo.js')}}"></script>
 <script>
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
+        .create( document.querySelector( '#editor' ), {
+            ckfinder: {
+                uploadUrl: '{{route('ckeditor.upload').'?_token='.csrf_token()}}',
+            }
+        })
         .catch( error => {
             console.error( error );
         } );

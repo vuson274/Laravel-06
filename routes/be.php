@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
-Route::prefix('/admin')->group(function (){
+use App\Http\Controllers\Admin\LoginController;
+Route::prefix('/admin')->middleware(\App\Http\Middleware\Admin::class)->group(function (){
     Route::prefix('/category')->group(function (){
         Route::get('/',[CategoryController::class,'list'])->name('admin.category.list');
         Route::get('/add', [CategoryController::class,'add'])->name('admin.category.add');
@@ -38,5 +39,8 @@ Route::prefix('/admin')->group(function (){
         Route::post('/doEdit', [ProductController::class,'doEdit'])->name('admin.product.doEdit');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
     });
+    Route::post('/upload', [ProductController::class,'upload'])->name('ckeditor.upload');
 });
+
+Route::get('/login', [LoginController::class,'showForm'])->name('login');
 ?>

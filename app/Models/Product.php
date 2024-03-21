@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = ['category_id','name','price','quantity','description','sold','view','sale_id'];
+    public function images(){
+        return $this->morphMany(Image::class,'imageable');
+    }
 }
