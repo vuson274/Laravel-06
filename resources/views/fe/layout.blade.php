@@ -28,6 +28,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('/web/css/style.css')}}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -103,8 +104,13 @@
             </div>
             <div class="modal-body d-flex align-items-center">
                 <div class="input-group w-75 mx-auto d-flex">
-                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                    <input type="search"  name="name" id="search_input" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                     <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div>
+                <div id="show_search">
+                    <div class="list-group" id="show-list" style="overflow: auto;height: 500px;">
+                        <!-- Here autocomplete list will be display -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,7 +225,62 @@
 
 <!-- Template Javascript -->
 <script src="{{asset('/web/js/main.js')}}"></script>
+<script>
+    $(document).on('keyup','#search_input', function (e){
+        let searchText = $(this).val();
+        {{--if(searchText != " "){--}}
+        {{--    axios({--}}
+        {{--        url:`{{route('search')}}`,--}}
+        {{--        method: 'get',--}}
+        {{--        params:{--}}
+        {{--            name: searchText,--}}
+        {{--        }--}}
+        {{--    }).then((response) => {--}}
+        {{--        let result =  response.map((value) =>{--}}
+        {{--            return  '<a href="/product/'+value.id+'"><img style="width: 10%;" src="http://127.0.0.1:8000/'+value.main_image+'" alt=""> &ensp;' +value.name+'</a>'--}}
+        {{--        })--}}
+        {{--        console.log(result);--}}
+        {{--        // $("#show_search").html(result);--}}
+        {{--    }).catch((error) => {--}}
+        {{--    });--}}
+        {{--}else {--}}
 
+        // }
+
+        if (searchText != " "){
+            $.ajax({
+                url: "{{ route('search') }}",
+                method: "get",
+                data: {
+                    name: searchText,
+                },
+                success: function (response) {
+                    let result =  response.map(value =>{
+                        return  '<a href="/product/'+value.id+'" class="list-group-item list-group-item-action border-1"><img style="width: 10%;" src="http://127.0.0.1:8000/'+value.main_image+'" alt=""> &ensp;' +value.name+'</a>'
+                    })
+                    $("#show-list").html(result);
+                },
+            });
+        }else {
+            $("#show-list").html("");
+        }
+    });
+</script>
+<script>
+    $(document).on('click','.order', function (){
+        let id = $(this).attr('id');
+        axios({
+            url:`{{route('api.cart.add')}}`,
+            method:'get',
+            params:{
+                id:id,
+            }
+        }).then((resp) => {
+            console.log(resp);
+        }).catch((error) => {
+        });
+    });
+</script>
 </body>
 
 </html>

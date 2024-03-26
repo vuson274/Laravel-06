@@ -137,8 +137,8 @@
                                                 <h4>{{$product->name}}</h4>
                                                 @php  echo $product->description @endphp
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">{{number_format($product->price)}} / kg</p>
-                                                    <a href="#order" class="btn border border-secondary rounded-pill px-3 text-primary order"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <p class="text-dark fs-5 fw-bold mb-0">{{number_format($product->price,0)}} / kg</p>
+                                                    <a href="#order" id="{{$product->id}}" class="btn border border-secondary rounded-pill px-3 text-primary order"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>
