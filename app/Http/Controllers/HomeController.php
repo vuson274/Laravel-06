@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function home(){
-        return view('fe.layout');
+        $categories = Category::all();
+        $products = Product::orderBy('id','DESC')->get();
+        $fruits = Product::orderBy('id','DESC')->where('category_id', $categories[0]->id)->get();
+        $vegetables = Product::orderBy('id','DESC')->where('category_id', $categories[1]->id)->get();
+        return view('fe.home', compact('categories','products', 'fruits','vegetables'));
     }
 }

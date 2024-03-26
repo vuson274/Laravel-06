@@ -30,7 +30,7 @@
                     <tr>
                         <th scope="row">{{$count}}</th>
                         <td>{{$item->name}}</td>
-                        <td>{{$item->price}}</td>
+                        <td>{{number_format($item->price,0)}}</td>
                         <td>{{$item->quantity}}</td>
                         <td>
                             <img style="width: 100px" src="{{$item->images[0]->path}}">
