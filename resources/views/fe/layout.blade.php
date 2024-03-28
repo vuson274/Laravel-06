@@ -77,11 +77,13 @@
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
                 </div>
-                <div class="d-flex m-3 me-0">
+                <div class="d-flex m-3 me-0" id="cart">
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                    <a href="#" class="position-relative me-4 my-auto">
+                    <a href="{{route('shop-cart')}}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                        @if(session('CART'))
+                        <div id="bag-cart" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{count(session('CART'))}}</div>
+                        @endif
                     </a>
                     <a href="#" class="my-auto">
                         <i class="fas fa-user fa-2x"></i>
@@ -102,14 +104,14 @@
                 <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body d-flex align-items-center">
+            <div class="modal-body d-flex align-items-center" style="display: flex; align-items: center">
                 <div class="input-group w-75 mx-auto d-flex">
                     <input type="search"  name="name" id="search_input" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                     <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                </div>
-                <div id="show_search">
-                    <div class="list-group" id="show-list" style="overflow: auto;height: 500px;">
-                        <!-- Here autocomplete list will be display -->
+                    <div id="show_search" style="position: absolute; width: 500px; right: 20%; top: 100%">
+                        <div class="list-group" id="show-list" style="overflow: auto;">
+                            <!-- Here autocomplete list will be display -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,9 +257,11 @@
                     name: searchText,
                 },
                 success: function (response) {
+
                     let result =  response.map(value =>{
-                        return  '<a href="/product/'+value.id+'" class="list-group-item list-group-item-action border-1"><img style="width: 10%;" src="http://127.0.0.1:8000/'+value.main_image+'" alt=""> &ensp;' +value.name+'</a>'
-                    })
+                        return  '<a href="/product/'+value.id+'" class="list-group-item list-group-item-action border-1"> &ensp;' +value.name+'</a>'
+                    });
+
                     $("#show-list").html(result);
                 },
             });
@@ -268,19 +272,39 @@
 </script>
 <script>
     $(document).on('click','.order', function (){
-        let id = $(this).attr('id');
-        axios({
-            url:`{{route('api.cart.add')}}`,
-            method:'get',
-            params:{
-                id:id,
-            }
-        }).then((resp) => {
-            console.log(resp);
-        }).catch((error) => {
+        var id = $(this).attr('id');
+        {{--axios({--}}
+        {{--    url:`{{route('api.cart.add')}}`,--}}
+        {{--    method:'get',--}}
+        {{--    params:{--}}
+        {{--        id:id,--}}
+        {{--    }--}}
+        {{--}).then((response) => {--}}
+        {{--   console.log(response);--}}
+        {{--}).catch((error) => {--}}
+        {{--});--}}
+        $.ajax({
+            url: "{{ route('api.cart.add') }}",
+            method: "post",
+            data: {
+                id: id,
+            },
+            success: function (response) {
+               console.log(response);
+               console.log(response);
+                // $("#cart").load('#bag-cart');
+                location.reload();
+            },
         });
     });
+
+    $(document).on('click','.qtybtn', function (){
+        let qty =  new Number($(this).attr('quantity'));
+        let inputQty =  new Number($(this).attr('name'));
+        alert(inputQty);
+    })
 </script>
+
 </body>
 
 </html>

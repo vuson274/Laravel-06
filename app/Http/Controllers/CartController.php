@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     const CART_KEY = 'CART';
-    public function addToCard(Request $request){
+    public function addToCart(Request $request){
         if($request->session()->exists(self::CART_KEY)){
             $cart = $request->session()->get(self::CART_KEY);
             $found = false;
@@ -36,5 +37,16 @@ class CartController extends Controller
             $request->session()->put(self::CART_KEY, $cart);
         }
         return response()->json(['msg' => 'Add item success', 'cart' => $cart],200);
+    }
+
+    public function cart(Request $request){
+        $total = 0;
+        if ($request->session()->exists(self::CART_KEY)){
+            $carts = $request->session()->get(self::CART_KEY);
+            foreach ($carts as $cart){
+                $total += $cart['product']['price']* $cart['quantity'];
+            }
+        }
+        return view('fe.shop-cart', compact('total'));
     }
 }

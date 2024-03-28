@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/search',[HomeController::class,'search'])->name('search');
-Route::get('/add-cart',[CartController::class,'addToCard'])->name('api.cart.add');
+Route::post('/add-cart',[CartController::class, 'addToCart'])->name('api.cart.add');
