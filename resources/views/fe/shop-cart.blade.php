@@ -46,13 +46,13 @@
                         <td>
                             <div class="input-group quantity mt-4" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <span class="dec qtybtn" quantity="-1" id = "{{$cart['product']['id']}}" name="{{$cart['quantity']}}" class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                    <span class="qtybtn" quantity="-1" id = "{{$cart['product']['id']}}" name="{{$cart['quantity']}}" class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                         <i class="fa fa-minus"></i>
                                     </span>
                                 </div>
-                                <input type="text"   id="qty" class="form-control form-control-sm text-center border-0" value="{{$cart['quantity']}}">
+                                <input type="text"  min="1" class="form-control form-control-sm text-center border-0" value="{{$cart['quantity']}}">
                                 <div class="input-group-btn">
-                                    <span  class="inc qtybtn" quantity="1" id ="{{$cart['product']['id']}}" name="{{$cart['quantity']}}" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                    <span  class="qtybtn" quantity="1" id ="{{$cart['product']['id']}}" name="{{$cart['quantity']}}" class="btn btn-sm btn-plus rounded-circle bg-light border">
                                         <i class="fa fa-plus"></i>
                                     </span>
                                 </div>
@@ -62,9 +62,9 @@
                             <p class="mb-0 mt-4">{{number_format($cart['product']['price']* $cart['quantity'], 0) }}</p>
                         </td>
                         <td>
-                            <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                            <span  id="{{$cart['product']['id']}}" class="del-cart btn btn-md rounded-circle bg-light border mt-4" >
                                 <i class="fa fa-times text-danger"></i>
-                            </button>
+                            </span>
                         </td>
 
                     </tr>
@@ -84,21 +84,20 @@
                             <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                             <div class="d-flex justify-content-between mb-4">
                                 <h5 class="mb-0 me-4">Subtotal:</h5>
-                                <p class="mb-0">$96.00</p>
+                                <p class="mb-0">{{number_format($total,0)}}</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <h5 class="mb-0 me-4">Shipping</h5>
-                                <div class="">
-                                    <p class="mb-0">Flat rate: $3.00</p>
-                                </div>
+{{--                                <h5 class="mb-0 me-4">Shipping</h5>--}}
+{{--                                <div class="">--}}
+{{--                                    <p class="mb-0">Flat rate: 30,000</p>--}}
+{{--                                </div>--}}
                             </div>
-                            <p class="mb-0 text-end">Shipping to Ukraine.</p>
                         </div>
                         <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                             <h5 class="mb-0 ps-4 me-4">Total</h5>
-                            <p class="mb-0 pe-4">$99.00</p>
+                            <p class="mb-0 pe-4">{{number_format($total,0)}}</p>
                         </div>
-                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                        <a  href="{{route('checkout')}}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</a>
                     </div>
                 </div>
             </div>

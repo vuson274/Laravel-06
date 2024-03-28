@@ -49,4 +49,34 @@ class CartController extends Controller
         }
         return view('fe.shop-cart', compact('total'));
     }
+
+
+    public function updateCart(Request $request){
+        $id = $request->id;
+        $quantity =  $request->inputQty> 0 ? $request->inputQty : 1 ;
+        $cart = $request->session()->get(self::CART_KEY);
+        $cartClc = collect($cart);
+        $cart = $cartClc->map(function ($item) use ($id, $quantity){
+            if ($item['product']->id == $id){
+                $item['quantity'] = $quantity;
+                return $item;
+            }
+            return $item;
+        });
+        $request->session()->put(self::CART_KEY, $cart->toArray());
+        return response()->json(['msg' => 'Update item success', 'cart' => $cart], 200);
+    }
+
+
+    public function deleteCart(Request $request){
+        $id = $request->id;
+        $cart = $request->session()->get(self::CART_KEY);
+        $cartClc = collect($cart);
+        $cart = $cartClc->filter(function ($item) use ($id){
+            return $item['product']->id != $id;
+        });
+        $cart = collect($cart->values());//đánh lại chỉ số
+        $request->session()->put(self::CART_KEY, $cart->toArray());
+        return response()->json(['msg' => 'Delete item success', 'cart' => $cart], 200);
+    }
 }

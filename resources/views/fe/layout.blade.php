@@ -298,10 +298,42 @@
         });
     });
 
+    // $(document).on('click','.qtybtn', function (){
+    //     let qty =  new Number($(this).attr('quantity'));
+    //     let inputQty =  new Number($(this).attr('name'));
+    //     alert(inputQty);
+    // })
     $(document).on('click','.qtybtn', function (){
-        let qty =  new Number($(this).attr('quantity'));
-        let inputQty =  new Number($(this).attr('name'));
-        alert(inputQty);
+        let qty = new Number($(this).attr('quantity'));
+        let inputQty = new Number($(this).attr('name'));
+        inputQty += qty;
+        let id = $(this).attr('id');
+        $.ajax({
+            url: "{{ route('api.cart.update') }}",
+            method: "put",
+            data: {
+                id: id,
+                inputQty: inputQty
+            },
+            success: function (response) {
+                location.reload();
+            },
+        });
+    })
+
+
+    $(document).on('click','.del-cart', function (){
+        let id = $(this).attr('id');
+        $.ajax({
+            url: "{{ route('api.cart.delete') }}",
+            method: "delete",
+            data: {
+                id: id,
+            },
+            success: function (response) {
+                location.reload();
+            },
+        });
     })
 </script>
 
